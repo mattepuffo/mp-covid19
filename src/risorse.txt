@@ -1,0 +1,13 @@
+const output = objArr.reduce((accumulator, cur) => {
+    let found = accumulator.find(elem => elem.codice_regione === cur.codice_regione);
+    if (found) {
+        found.dimessi_guariti += cur.dimessi_guariti;
+        found.ricoverati_con_sintomi += cur.ricoverati_con_sintomi;
+        found.terapia_intensiva += cur.terapia_intensiva;
+        found.deceduti += cur.deceduti;
+        console.log(found.deceduti);
+    } else {
+        accumulator.push(cur);
+    }
+    return accumulator;
+}, []);

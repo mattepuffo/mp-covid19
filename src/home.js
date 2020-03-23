@@ -1,9 +1,13 @@
+// https://github.com/pcm-dpc/COVID-19
+// https://github.com/hidran/coronavirus-italia/tree/master/src
+
 import * as React from "react";
-import {Layout, Button, Input, Row, Col, Table, Card, Statistic, PageHeader} from 'antd';
-import {getDataRegion, getTotal} from "./helpers";
+import {Layout, Button, Input, Row, Col, Table, Card, Statistic, PageHeader, Typography} from 'antd';
+import {formatDate, getDataRegion, getTime, getTotal, getYesterdaysDate} from "./helpers";
 import 'antd/dist/antd.css';
 
 const {Content, Footer} = Layout;
+const {Paragraph} = Typography;
 
 export default class Home extends React.Component {
 
@@ -12,29 +16,64 @@ export default class Home extends React.Component {
 
         this.state = {
             items: [],
+            itemsIeri: [],
             searchText: '',
             searchedColumn: '',
             visible: false,
             totDimessi: 0,
             totDeceduti: 0,
-            totCasi: 0
+            totCasi: 0,
+            totDimessiIeri: 0,
+            totDecedutiIeri: 0,
+            totCasiIeri: 0
         }
     }
 
     async componentDidMount() {
-        await getDataRegion().then(data => {
-            this.setState({
-                items: data
-            });
-        });
+        let today = null;
+        let yesterday = null;
 
-        await getTotal(this.state.items).then(tot => {
-            this.setState({
-                totDimessi: tot[0],
-                totDeceduti: tot[1],
-                totCasi: tot[2]
+        if (getTime() < "18:00") {
+            today = getYesterdaysDate(1);
+            yesterday = getYesterdaysDate(2);
+        } else {
+            today = new Date().toJSON().slice(0, 10).replace(/-/g, '-');
+            yesterday = getYesterdaysDate(1);
+        }
+
+        sessionStorage.setItem("GIORNO", formatDate(today));
+
+        await getDataRegion(today)
+            .then(data => {
+                this.setState({
+                    items: data
+                })
             });
-        });
+
+        await getDataRegion(yesterday)
+            .then(data => {
+                this.setState({
+                    itemsIeri: data
+                })
+            });
+
+        await getTotal(this.state.items)
+            .then(tot => {
+                this.setState({
+                    totDimessi: tot[0],
+                    totDeceduti: tot[1],
+                    totCasi: tot[2]
+                });
+            });
+
+        await getTotal(this.state.itemsIeri)
+            .then(tot => {
+                this.setState({
+                    totDimessiIeri: tot[0],
+                    totDecedutiIeri: tot[1],
+                    totCasiIeri: tot[2]
+                });
+            });
     }
 
     getColumnSearchProps = dataIndex => ({
@@ -258,32 +297,41 @@ export default class Home extends React.Component {
                             subTitle={"Aggiornati al " + sessionStorage.getItem("GIORNO")}
                         />
                         <div className="site-statistic-demo-card">
-                            <Row gutter={16}>
-                                <Col span={8}>
+                            <Row>
+                                <Col flex={8}>
                                     <Card>
                                         <Statistic
                                             title="Totale deceduti"
                                             value={this.state.totDeceduti}
                                             valueStyle={{color: '#cf1322'}}
                                         />
+                                        <Paragraph>
+                                            +{this.state.totDeceduti - this.state.totDecedutiIeri} da ieri
+                                        </Paragraph>
                                     </Card>
                                 </Col>
-                                <Col span={8}>
+                                <Col flex={8}>
                                     <Card>
                                         <Statistic
                                             title="Totale dimessi"
                                             value={this.state.totDimessi}
                                             valueStyle={{color: '#52c41a'}}
                                         />
+                                        <Paragraph>
+                                            +{this.state.totDimessi - this.state.totDimessiIeri} da ieri
+                                        </Paragraph>
                                     </Card>
                                 </Col>
-                                <Col span={8}>
+                                <Col flex={8}>
                                     <Card>
                                         <Statistic
                                             title="Totale casi"
                                             value={this.state.totCasi}
                                             valueStyle={{color: '#1890ff'}}
                                         />
+                                        <Paragraph>
+                                            +{this.state.totCasi - this.state.totCasiIeri} da ieri
+                                        </Paragraph>
                                     </Card>
                                 </Col>
                             </Row>
@@ -291,20 +339,20 @@ export default class Home extends React.Component {
                         <div className="site-layout-content">
                             <Row type="flex" justify="space-around" align="middle">
                                 <Col span={24}>
-                                        <Table
-                                            dataSource={this.state.items}
-                                            pagination={{
-                                                total: this.state.items.length,
-                                                pageSize: this.state.items.length,
-                                                hideOnSinglePage: true
-                                            }}
-                                            layout="fixed"
-                                            columns={columns}
-                                            bordered
-                                            title={() => 'DATI PER REGIONE'}
-                                            size="middle"
-                                            rowKey="codice_regione"
-                                        />
+                                    <Table
+                                        dataSource={this.state.items}
+                                        pagination={{
+                                            total: this.state.items.length,
+                                            pageSize: this.state.items.length,
+                                            hideOnSinglePage: true
+                                        }}
+                                        layout="fixed"
+                                        columns={columns}
+                                        bordered
+                                        title={() => 'DATI PER REGIONE'}
+                                        size="middle"
+                                        rowKey="codice_regione"
+                                    />
                                 </Col>
                             </Row>
                         </div>
