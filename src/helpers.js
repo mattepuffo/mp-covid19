@@ -48,3 +48,32 @@ export async function getTotal(objArr) {
     result.push(sumDimessi, sumDeceduti, sumPositivi);
     return result;
 }
+
+export async function getDatiInternazionali() {
+    return fetch("https://sharad-gql-covid19.herokuapp.com/graphql",
+        {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                query: `{
+                    countries(sortBy: "deaths", order: "desc") {
+                        country
+                        cases
+                        todayCases
+                        deaths
+                        todayDeaths
+                        recovered
+                        active
+                        critical
+                        casesPerOneMillion
+                        deathsPerOneMillion
+                    } 
+                }`
+            })
+        }
+    )
+        .then(res => res.json())
+        .then(res => {
+            return res.data.countries;
+        });
+}

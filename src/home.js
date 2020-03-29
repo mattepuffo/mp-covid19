@@ -1,9 +1,10 @@
 // https://github.com/pcm-dpc/COVID-19
 // https://github.com/hidran/coronavirus-italia/tree/master/src
+// https://github.com/sharadcodes/covid19-graphql
 
 import * as React from "react";
-import {Layout, Button, Input, Row, Col, Table, Card, Statistic, PageHeader, Typography} from 'antd';
-import {formatDate, getDataRegion, getTime, getTotal, getYesterdaysDate} from "./helpers";
+import {Layout, Button, Input, Row, Col, Table, Card, Statistic, PageHeader, Typography, Divider} from 'antd';
+import {formatDate, getDataRegion, getTime, getTotal, getYesterdaysDate, getDatiInternazionali} from "./helpers";
 import 'antd/dist/antd.css';
 
 const {Content, Footer} = Layout;
@@ -16,6 +17,7 @@ export default class Home extends React.Component {
 
         this.state = {
             items: [],
+            itemsPaesi: [],
             itemsIeri: [],
             searchText: '',
             searchedColumn: '',
@@ -74,6 +76,13 @@ export default class Home extends React.Component {
                     totCasiIeri: tot[2]
                 });
             });
+
+        await getDatiInternazionali()
+            .then(data => {
+                this.setState({
+                    itemsPaesi: data
+                })
+            });
     }
 
     getColumnSearchProps = dataIndex => ({
@@ -92,7 +101,6 @@ export default class Home extends React.Component {
                 <Button
                     type="primary"
                     onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-                    icon="search"
                     size="small"
                     style={{width: 90, marginRight: 8}}
                 >
@@ -287,6 +295,150 @@ export default class Home extends React.Component {
             }
         ];
 
+        const columnsPaesi = [
+            {
+                title: 'Paese',
+                dataIndex: 'country',
+                key: 'country',
+                sorter: (a, b) => {
+                    if (a.country < b.country) {
+                        return -1;
+                    }
+                    if (a.country > b.country) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend'],
+                ...this.getColumnSearchProps('country')
+            },
+            {
+                title: 'Attivi',
+                dataIndex: 'active',
+                key: 'active',
+                sorter: (a, b) => {
+                    if (a.active < b.active) {
+                        return -1;
+                    }
+                    if (a.active > b.active) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Casi',
+                dataIndex: 'cases',
+                key: 'cases',
+                sorter: (a, b) => {
+                    if (a.cases < b.cases) {
+                        return -1;
+                    }
+                    if (a.cases > b.cases) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Casi per un milione',
+                dataIndex: 'casesPerOneMillion',
+                key: 'casesPerOneMillion',
+                sorter: (a, b) => {
+                    if (a.casesPerOneMillion < b.casesPerOneMillion) {
+                        return -1;
+                    }
+                    if (a.casesPerOneMillion > b.casesPerOneMillion) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Critici',
+                dataIndex: 'critical',
+                key: 'critical',
+                sorter: (a, b) => {
+                    if (a.critical < b.critical) {
+                        return -1;
+                    }
+                    if (a.critical > b.critical) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Morti',
+                dataIndex: 'deaths',
+                key: 'deaths',
+                sorter: (a, b) => {
+                    if (a.deaths < b.deaths) {
+                        return -1;
+                    }
+                    if (a.deaths > b.deaths) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Morti per un milione',
+                dataIndex: 'deathsPerOneMillion',
+                key: 'deathsPerOneMillion',
+                sorter: (a, b) => {
+                    if (a.deathsPerOneMillion < b.deathsPerOneMillion) {
+                        return -1;
+                    }
+                    if (a.deathsPerOneMillion > b.deathsPerOneMillion) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Ricoverati',
+                dataIndex: 'recovered',
+                key: 'recovered',
+                sorter: (a, b) => {
+                    if (a.recovered < b.recovered) {
+                        return -1;
+                    }
+                    if (a.recovered > b.recovered) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Casi oggi',
+                dataIndex: 'todayCases',
+                key: 'todayCases',
+                sorter: (a, b) => {
+                    if (a.todayCases < b.todayCases) {
+                        return -1;
+                    }
+                    if (a.todayCases > b.todayCases) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Morti oggi',
+                dataIndex: 'todayDeaths',
+                key: 'todayDeaths',
+                sorter: (a, b) => {
+                    if (a.todayDeaths < b.todayDeaths) {
+                        return -1;
+                    }
+                    if (a.todayDeaths > b.todayDeaths) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            }
+        ];
+
         return (
             <div>
                 <Layout className="layout">
@@ -352,6 +504,27 @@ export default class Home extends React.Component {
                                         title={() => 'DATI PER REGIONE'}
                                         size="middle"
                                         rowKey="codice_regione"
+                                    />
+                                </Col>
+                            </Row>
+                        </div>
+                        <Divider />
+                        <div className="site-layout-content">
+                            <Row type="flex" justify="space-around" align="middle">
+                                <Col span={24}>
+                                    <Table
+                                        dataSource={this.state.itemsPaesi}
+                                        pagination={{
+                                            total: this.state.itemsPaesi.length,
+                                            pageSize: this.state.itemsPaesi.length,
+                                            hideOnSinglePage: true
+                                        }}
+                                        layout="fixed"
+                                        columns={columnsPaesi}
+                                        bordered
+                                        title={() => 'DATI PER PAESE'}
+                                        size="middle"
+                                        rowKey="country"
                                     />
                                 </Col>
                             </Row>
