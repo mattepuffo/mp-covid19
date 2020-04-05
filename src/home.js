@@ -210,28 +210,28 @@ export default class Home extends React.Component {
                 sortDirections: ['descend']
             },
             {
-                title: 'Attualmente positivi',
-                dataIndex: 'totale_attualmente_positivi',
-                key: 'totale_attualmente_positivi',
+                title: 'Totale positivi',
+                dataIndex: 'totale_positivi',
+                key: 'totale_positivi',
                 sorter: (a, b) => {
-                    if (a.totale_attualmente_positivi < b.totale_attualmente_positivi) {
+                    if (a.totale_positivi < b.totale_positivi) {
                         return -1;
                     }
-                    if (a.totale_attualmente_positivi > b.totale_attualmente_positivi) {
+                    if (a.totale_positivi > b.totale_positivi) {
                         return 1;
                     }
                 },
                 sortDirections: ['descend']
             },
             {
-                title: 'Nuovi positivi',
-                dataIndex: 'nuovi_attualmente_positivi',
-                key: 'nuovi_attualmente_positivi',
+                title: 'Variazione totale positivi',
+                dataIndex: 'variazione_totale_positivi',
+                key: 'variazione_totale_positivi',
                 sorter: (a, b) => {
-                    if (a.nuovi_attualmente_positivi < b.nuovi_attualmente_positivi) {
+                    if (a.variazione_totale_positivi < b.variazione_totale_positivi) {
                         return -1;
                     }
-                    if (a.nuovi_attualmente_positivi > b.nuovi_attualmente_positivi) {
+                    if (a.variazione_totale_positivi > b.variazione_totale_positivi) {
                         return 1;
                     }
                 },
@@ -274,6 +274,20 @@ export default class Home extends React.Component {
                         return -1;
                     }
                     if (a.totale_casi > b.totale_casi) {
+                        return 1;
+                    }
+                },
+                sortDirections: ['descend']
+            },
+            {
+                title: 'Nuovi positivi',
+                dataIndex: 'nuovi_positivi',
+                key: 'nuovi_positivi',
+                sorter: (a, b) => {
+                    if (a.nuovi_positivi < b.nuovi_positivi) {
+                        return -1;
+                    }
+                    if (a.nuovi_positivi > b.nuovi_positivi) {
                         return 1;
                     }
                 },
@@ -504,11 +518,12 @@ export default class Home extends React.Component {
                                         title={() => 'DATI PER REGIONE'}
                                         size="middle"
                                         rowKey="codice_regione"
+                                        scroll={{ y: 300 }}
                                     />
                                 </Col>
                             </Row>
                         </div>
-                        <Divider />
+                        <Divider/>
                         <div className="site-layout-content">
                             <Row type="flex" justify="space-around" align="middle">
                                 <Col span={24}>
@@ -525,6 +540,7 @@ export default class Home extends React.Component {
                                         title={() => 'DATI PER PAESE'}
                                         size="middle"
                                         rowKey="country"
+                                        scroll={{ y: 500 }}
                                     />
                                 </Col>
                             </Row>

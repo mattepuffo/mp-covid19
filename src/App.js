@@ -1,10 +1,13 @@
 import React from 'react';
 import Home from "./home";
+import HttpsRedirect from 'react-https-redirect';
 
 function App() {
     return (
         <React.Fragment>
-            <Home/>
+            <HttpsRedirect>
+                <Home/>
+            </HttpsRedirect>
         </React.Fragment>
     );
 }
