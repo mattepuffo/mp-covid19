@@ -151,7 +151,7 @@ export default class Home extends React.Component {
                     }
                 },
                 sortDirections: ['descend'],
-                ...this.getColumnSearchProps('denominazione_regione')
+                ...this.getColumnSearchProps('denominazione_regione'),
             },
             {
                 title: 'Ricoverati',
@@ -165,7 +165,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Terapia intensiva',
@@ -179,7 +180,7 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
             },
             {
                 title: 'Totale ospedalizzati',
@@ -193,7 +194,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Isolamento',
@@ -207,7 +209,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Totale positivi',
@@ -221,7 +224,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Variazione totale positivi',
@@ -235,7 +239,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Dimessi',
@@ -249,7 +254,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Deceduti',
@@ -263,7 +269,7 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
             },
             {
                 title: 'Totale casi',
@@ -277,7 +283,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Nuovi positivi',
@@ -291,7 +298,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Tamponi',
@@ -305,7 +313,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             }
         ];
 
@@ -337,7 +346,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Casi',
@@ -365,7 +375,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Critici',
@@ -379,7 +390,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Morti',
@@ -407,7 +419,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Ricoverati',
@@ -421,7 +434,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Casi oggi',
@@ -435,7 +449,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             },
             {
                 title: 'Morti oggi',
@@ -449,7 +464,8 @@ export default class Home extends React.Component {
                         return 1;
                     }
                 },
-                sortDirections: ['descend']
+                sortDirections: ['descend'],
+                responsive: ['lg'],
             }
         ];
 
@@ -518,7 +534,7 @@ export default class Home extends React.Component {
                                         title={() => 'DATI PER REGIONE'}
                                         size="middle"
                                         rowKey="codice_regione"
-                                        scroll={{ y: 300 }}
+                                        scroll={{y: 300}}
                                     />
                                 </Col>
                             </Row>
@@ -540,7 +556,7 @@ export default class Home extends React.Component {
                                         title={() => 'DATI PER PAESE'}
                                         size="middle"
                                         rowKey="country"
-                                        scroll={{ y: 500 }}
+                                        scroll={{y: 500}}
                                     />
                                 </Col>
                             </Row>

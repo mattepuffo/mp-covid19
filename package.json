@@ -1,6 +1,6 @@
 {
   "name": "coronavirus",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "author": "Matteo Ferrone",
   "keywords": [
@@ -9,15 +9,15 @@
   ],
   "license": "CC BY 4.0",
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "antd": "^4.0.3",
+    "@testing-library/jest-dom": "5.11.9",
+    "@testing-library/react": "11.2.5",
+    "@testing-library/user-event": "12.8.3",
+    "antd": "4.14.0",
     "axios": "0.21.1",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-https-redirect": "^1.1.0",
-    "react-scripts": "^4.0.1"
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-https-redirect": "1.1.0",
+    "react-scripts": "4.0.3"
   },
   "repository": {
     "type": "git",
